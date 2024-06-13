@@ -4,6 +4,7 @@
 //
 // For reasons that we'll explain later, the customization needs to be done in the `Cargo.toml`
 // at the root of the repository, not in the `Cargo.toml` of the exercise.
+// Done !
 
 pub fn factorial(n: u32) -> u32 {
     let mut result = 1;
