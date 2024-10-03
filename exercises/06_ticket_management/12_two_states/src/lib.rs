@@ -7,6 +7,7 @@
 // and returns an `Option<&Ticket>`.
 
 use ticket_fields::{TicketDescription, TicketTitle};
+use rand::Rng;
 
 #[derive(Clone)]
 pub struct TicketStore {
@@ -44,8 +45,24 @@ impl TicketStore {
         }
     }
 
-    pub fn add_ticket(&mut self, ticket: Ticket) {
+    pub fn add_ticket(&mut self, ticket_draft: TicketDraft) -> TicketId {
+        let mut rng = rand::thread_rng();
+        let id = rng.gen();
+
+        let ticket = Ticket {
+            id: TicketId(id),
+            title: ticket_draft.title,
+            description: ticket_draft.description,
+            status: Status::ToDo,
+        };
+
         self.tickets.push(ticket);
+
+        TicketId(id)
+    }
+
+    pub fn get(&self, id: TicketId) -> Option<&Ticket> {
+        self.tickets.iter().find(|t| t.id == id)
     }
 }
 
